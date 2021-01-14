@@ -1,6 +1,7 @@
 #pragma once
 
-void init();
-void increment();
-int get_value();
-int *accessor();
+namespace MyLibrary {	
+	void increment();
+	int get_value();
+	void wait_sleep(int seconds);
+}

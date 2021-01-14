@@ -1,27 +1,14 @@
 #include "mylibrary.h"
 #include <cstdlib>
 
-int *a = NULL;
+static int a = 0;
 
-void init()
+void MyLibrary::increment()
 {
-	if (!a)
-	{
-		a = new int();
-	}
+	a += 1;
 }
 
-void increment()
-{
-	if (a) *a += 1;
-}
-
-int get_value()
-{
-	return (a) ? *a : 0;
-}
-
-int *accessor()
+int MyLibrary::get_value()
 {
 	return a;
 }
