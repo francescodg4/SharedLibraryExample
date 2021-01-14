@@ -1,4 +1,4 @@
-CPPFLAGS+=-fPIC
+CPPFLAGS+=-g -fPIC -I/usr/include/libusb-1.0
 
 all: libmylibrary.so
 
