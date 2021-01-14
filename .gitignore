@@ -1,3 +1,10 @@
 *.so
 *.o
 *~
+*.sln
+*.vcxproj
+/libmylibrary/LibMyLibrary.vcxproj.user
+/libmylibrary/LibMyLibrary.vcxproj.filters
+/libmylibrary/Debug/
+/libmylibrary/.vs/
+/.vs
