@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MYLIBRARY_H
+#define MYLIBRARY_H
 
 #include <cstddef>
 #include <iterator>
@@ -196,3 +197,5 @@ extern template class Array<double>;
 extern template class Array<Object>;
 
 } // namespace mylibrary
+
+#endif // MYLIBRARY_H
