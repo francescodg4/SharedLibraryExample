@@ -36,6 +36,8 @@ static void print(const mylibrary::Array<T>& array)
 
 int main()
 {
+    std::cout << "Is shared?: " << (mylibrary::is_shared() ? "True" : "False") << '\n';
+
     mylibrary::Array<int> arr;
 
     std::cout << "Sizeof(mylibrary::Array<int>): " << sizeof(mylibrary::Array<int>) << "\n";

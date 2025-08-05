@@ -3,6 +3,15 @@
 
 namespace mylibrary {
 
+bool is_shared()
+{
+#if defined(BUILD_LIBTYPE_SHARED)
+    return true;
+#else
+    return false;
+#endif
+}
+
 template <typename T>
 struct Array<T>::ArrayImpl {
     std::vector<T> values;

@@ -1,6 +1,24 @@
 #ifndef MYLIBRARY_H
 #define MYLIBRARY_H
 
+// clang-format off
+#if defined(_WIN32)
+    #if defined(BUILD_LIBTYPE_SHARED)
+        #define MYLIBRARY_API __declspec(dllexport)     // We are building the library as a Win32 shared library (.dll)
+    #elif defined(USE_LIBTYPE_SHARED)
+        #define MYLIBRARY_API __declspec(dllimport)     // We are using the library as a Win32 shared library (.dll)
+    #endif
+#else
+    #if defined(BUILD_LIBTYPE_SHARED)
+        #define MYLIBRARY_API __attribute__((visibility("default"))) // We are building as a Unix shared library (.so/.dylib)
+    #endif
+#endif
+
+#ifndef MYLIBRARY_API
+    #define MYLIBRARY_API
+#endif
+// clang-format on
+
 #include <cstddef>
 #include <iterator>
 #include <vector>
@@ -12,6 +30,8 @@ struct Object {
     int b;
 };
 
+MYLIBRARY_API bool is_shared();
+
 template <typename T>
 class Array {
 public:
@@ -20,71 +40,71 @@ public:
     class iterator;
     using reverse_iterator = std::reverse_iterator<iterator>;
 
-    Array();
+    MYLIBRARY_API Array();
 
-    Array(size_t count, const T& value = T());
+    MYLIBRARY_API Array(size_t count, const T& value = T());
 
-    Array(std::initializer_list<T> init);
+    MYLIBRARY_API Array(std::initializer_list<T> init);
 
-    Array(iterator first, iterator last);
+    MYLIBRARY_API Array(iterator first, iterator last);
 
-    ~Array();
+    MYLIBRARY_API ~Array();
 
-    Array(Array&);
+    MYLIBRARY_API Array(Array&);
 
-    Array& operator=(Array&);
+    MYLIBRARY_API Array& operator=(Array&);
 
-    Array(Array&&);
+    MYLIBRARY_API Array(Array&&);
 
-    Array& operator=(Array&&);
+    MYLIBRARY_API Array& operator=(Array&&);
 
-    size_t size() const;
+    MYLIBRARY_API size_t size() const;
 
-    bool empty() const;
+    MYLIBRARY_API bool empty() const;
 
-    void push_back(const T& value);
+    MYLIBRARY_API void push_back(const T& value);
 
-    void push_back(T&& value);
+    MYLIBRARY_API void push_back(T&& value);
 
-    T& operator[](size_t pos);
+    MYLIBRARY_API T& operator[](size_t pos);
 
-    const T& operator[](size_t pos) const;
+    MYLIBRARY_API const T& operator[](size_t pos) const;
 
-    T& front();
+    MYLIBRARY_API T& front();
 
-    const T& front() const;
+    MYLIBRARY_API const T& front() const;
 
-    T& back();
+    MYLIBRARY_API T& back();
 
-    const T& back() const;
+    MYLIBRARY_API const T& back() const;
 
-    T* data();
+    MYLIBRARY_API T* data();
 
-    const T* data() const;
+    MYLIBRARY_API const T* data() const;
 
-    iterator begin() const;
+    MYLIBRARY_API iterator begin() const;
 
-    iterator begin();
+    MYLIBRARY_API iterator begin();
 
-    iterator end() const;
+    MYLIBRARY_API iterator end() const;
 
-    iterator end();
+    MYLIBRARY_API iterator end();
 
-    reverse_iterator rbegin() { return reverse_iterator(end()); }
+    MYLIBRARY_API reverse_iterator rbegin() { return reverse_iterator(end()); }
 
-    reverse_iterator rend() { return reverse_iterator(begin()); }
+    MYLIBRARY_API reverse_iterator rend() { return reverse_iterator(begin()); }
 
-    iterator insert(iterator pos, const T& value);
+    MYLIBRARY_API iterator insert(iterator pos, const T& value);
 
-    iterator erase(iterator pos);
+    MYLIBRARY_API iterator erase(iterator pos);
 
-    iterator erase(iterator first, iterator last);
+    MYLIBRARY_API iterator erase(iterator first, iterator last);
 
-    void assign(size_t count, const T& value);
+    MYLIBRARY_API void assign(size_t count, const T& value);
 
-    void assign(iterator first, iterator last);
+    MYLIBRARY_API void assign(iterator first, iterator last);
 
-    void assign(std::initializer_list<T> ilist);
+    MYLIBRARY_API void assign(std::initializer_list<T> ilist);
 
     static Array<T> from(const std::vector<T>& in)
     {
@@ -97,7 +117,7 @@ public:
     }
 
     template <typename T_>
-    friend bool operator==(const Array<T_>& lhs, const Array<T_>& rhs);
+    MYLIBRARY_API friend bool operator==(const Array<T_>& lhs, const Array<T_>& rhs);
 
     class iterator {
     public:
@@ -189,12 +209,19 @@ private:
     ArrayImpl* m_impl;
 };
 
+template <typename T_>
+extern MYLIBRARY_API bool operator==(const Array<T_>& lhs, const Array<T_>& rhs);
+
 template <typename T>
 bool operator!=(const Array<T>& lhs, const Array<T>& rhs) { return !(lhs == rhs); }
 
-extern template class Array<int>;
-extern template class Array<double>;
-extern template class Array<Object>;
+extern template MYLIBRARY_API class Array<int>;
+extern template MYLIBRARY_API bool operator==(const Array<int>& lhs, const Array<int>& rhs);
+
+extern template MYLIBRARY_API class Array<double>;
+extern template MYLIBRARY_API bool operator==(const Array<double>& lhs, const Array<double>& rhs);
+
+extern template MYLIBRARY_API class Array<Object>;
 
 } // namespace mylibrary
 
