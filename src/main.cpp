@@ -1,10 +1,10 @@
 
 #include <algorithm>
-#include <mylibrary.h>
 #include <iostream>
-
 #include <ostream>
 #include <vector>
+
+#include <mylibrary.h>
 
 static std::ostream& operator<<(std::ostream& os, const mylibrary::Object& object)
 {

@@ -1,5 +1,4 @@
 #include "mylibrary.h"
-#include <iostream>
 #include <vector>
 
 namespace mylibrary {
